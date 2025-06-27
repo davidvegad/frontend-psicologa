@@ -29,7 +29,7 @@ function PostDetailPage({ post }) {
 
         {post.featured_image_url && (
           <div className="mb-8 rounded-lg overflow-hidden shadow-lg">
-             <img src={post.featured_image_url} alt={post.title} className="w-full h-auto object-cover"/>
+             <Image src={post.featured_image_url} alt={post.title} width={1200} height={600} className="w-full h-auto object-cover"/>
           </div>
         )}
 

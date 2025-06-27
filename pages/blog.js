@@ -1,6 +1,8 @@
 // pages/blog.js
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
+
 
 function BlogPage({ posts }) {
   return (
@@ -16,7 +18,7 @@ function BlogPage({ posts }) {
           <Link href={`/blog/${post.slug}`} key={post.id} className="flex flex-col border rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
             {post.featured_image_url && (
               <div className="w-full h-48 relative">
-                <img src={post.featured_image_url} alt={post.title} className="w-full h-full object-cover"/>
+                <Image src={post.featured_image_url} alt={post.title} width={1200} height={600} className="w-full h-full object-cover"/>
               </div>
             )}
             <div className="p-6 flex-grow flex flex-col">

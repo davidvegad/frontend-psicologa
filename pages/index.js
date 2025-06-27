@@ -1,6 +1,7 @@
 // pages/index.js
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CheckCircleIcon } from '@heroicons/react/24/solid'; // Necesitarás instalar @heroicons/react
 
 function HomePage({ posts, testimonials, services, profile }) {
@@ -35,7 +36,7 @@ function HomePage({ posts, testimonials, services, profile }) {
             </Link>
           </div>
           <div className="order-1 md:order-2 flex justify-center">
-            <img src={profile.photo_url} alt={`Foto de ${profile.user.first_name}`} className="w-80 h-80 rounded-full object-cover shadow-2xl" />
+            <Image src={profile.photo_url} alt={`Foto de ${profile.user.first_name}`} width={1200} height={600} className="w-80 h-80 rounded-full object-cover shadow-2xl" />
           </div>
         </section>
       )}
@@ -79,7 +80,7 @@ function HomePage({ posts, testimonials, services, profile }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post) => (
               <Link href={`/blog/${post.slug}`} key={post.id} className="block border rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300">
-                <img src={post.featured_image_url || 'https://via.placeholder.com/400x250'} alt={post.title} className="w-full h-48 object-cover"/>
+                <Image src={post.featured_image_url || 'https://via.placeholder.com/400x250'} alt={post.title} width={1200} height={600} className="w-full h-48 object-cover"/>
                 <div className="p-6">
                   <h3 className="text-xl font-bold font-serif text-brand-secondary mb-2">{post.title}</h3>
                   <p className="text-brand-text mb-4">{post.content.substring(0, 100)}...</p>

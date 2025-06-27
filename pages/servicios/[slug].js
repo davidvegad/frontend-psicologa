@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react'; // <-- Importar hooks
+import Image from 'next/image';
 import { WhatsAppContext } from '../../context/WhatsAppContext'; // <-- Importar contexto
 
 
@@ -51,9 +52,11 @@ function ServiceDetailPage({ service }) {
       </Head>
 
       {service.image_url && (
-        <img
+        <Image
           src={service.image_url}
           alt={`Imagen de ${service.title}`}
+		  width={1200} 
+		  height={600}
           className="w-full max-h-96 object-cover rounded-lg mb-8 shadow-lg"
         />
       )}
