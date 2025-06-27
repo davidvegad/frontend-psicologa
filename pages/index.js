@@ -1,115 +1,126 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+// pages/index.js
+import Head from 'next/head';
+import Link from 'next/link';
+import { CheckCircleIcon } from '@heroicons/react/24/solid'; // Necesitarás instalar @heroicons/react
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export default function Home() {
+function HomePage({ posts, testimonials, services, profile }) {
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="bg-brand-light">
+      <Head>
+  <title>{`Psicóloga ${profile ? `${profile.user.first_name} ${profile.user.last_name}` : '[Nombre]'}`}</title>
+  {/* ... */}
+</Head>
+
+      {/* Sección Hero */}
+      <section className="text-center py-24 px-4">
+        <h1 className="font-serif text-5xl md:text-6xl font-bold text-brand-secondary">
+          Un Espacio Seguro Para Crecer
+        </h1>
+        <p className="text-xl text-brand-text mt-6 max-w-2xl mx-auto">
+          Te acompaño en tu proceso de autoconocimiento y bienestar emocional a través de una terapia cercana y profesional.
+        </p>
+        <Link href="/contact" className="mt-10 inline-block bg-brand-primary text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-brand-primary-dark transition-all duration-300 shadow-lg hover:shadow-xl">
+          Agendar una Cita
+        </Link>
+      </section>
+
+      {/* Sección "Sobre Mí" (Teaser) */}
+      {profile && (
+        <section className="container mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+          <div className="order-2 md:order-1">
+            <h2 className="font-serif text-4xl font-bold text-brand-secondary mb-4">Hola, soy {profile.user.first_name}</h2>
+            <p className="text-brand-text text-lg mb-6">{profile.bio.substring(0, 250)}...</p>
+            <Link href="/about" className="font-bold text-brand-primary hover:text-brand-primary-dark transition-colors">
+              Conoce más sobre mí &rarr;
+            </Link>
+          </div>
+          <div className="order-1 md:order-2 flex justify-center">
+            <img src={profile.photo_url} alt={`Foto de ${profile.user.first_name}`} className="w-80 h-80 rounded-full object-cover shadow-2xl" />
+          </div>
+        </section>
+      )}
+
+      {/* Sección Servicios */}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-serif text-4xl font-bold text-brand-secondary mb-12">¿Cómo Puedo Ayudarte?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {services.map((service) => (
+              <Link href={`/servicios/${service.slug}`} key={service.id} className="bg-brand-light p-8 rounded-2xl text-left hover:-translate-y-2 transition-transform duration-300 shadow-sm hover:shadow-xl">
+                <CheckCircleIcon className="w-12 h-12 text-brand-primary mb-4" />
+                <h3 className="text-2xl font-bold font-serif text-brand-secondary mb-2">{service.title}</h3>
+                <p className="text-brand-text">{service.description.substring(0, 100)}...</p>
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Sección de Testimonios */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-brand-secondary text-center mb-12 font-serif">Lo que dicen mis pacientes</h2>
+          <div className="max-w-3xl mx-auto space-y-8">
+            {testimonials.map((testimonial) => (
+              <blockquote key={testimonial.id} className="p-8 bg-white rounded-xl shadow-lg relative">
+                <p className="text-xl text-brand-text italic relative z-10">“{testimonial.quote}”</p>
+                <cite className="block text-right mt-4 font-semibold text-brand-secondary not-italic">- {testimonial.author}</cite>
+                <div className="absolute top-2 left-4 text-8xl text-brand-primary opacity-10 font-serif">“</div>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sección de Últimos Artículos del Blog */}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-brand-secondary text-center mb-12 font-serif">Desde Mi Blog</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <Link href={`/blog/${post.slug}`} key={post.id} className="block border rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300">
+                <img src={post.featured_image_url || 'https://via.placeholder.com/400x250'} alt={post.title} className="w-full h-48 object-cover"/>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold font-serif text-brand-secondary mb-2">{post.title}</h3>
+                  <p className="text-brand-text mb-4">{post.content.substring(0, 100)}...</p>
+                  <span className="font-bold text-brand-primary">Leer más &rarr;</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
+
+// Actualizamos getStaticProps para que obtenga todos los datos necesarios
+export async function getStaticProps() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const [postsRes, testimonialsRes, servicesRes, profileRes, settingsRes] = await Promise.all([
+    fetch(`${apiUrl}/posts/?status=published`),
+    fetch(`${apiUrl}/testimonials/?is_visible=true`),
+    fetch(`${apiUrl}/services/`),
+    fetch(`${apiUrl}/profile/1/`),
+	fetch(`${apiUrl}/settings/`)
+  ]);
+
+  const postsData = await postsRes.json();
+  const testimonialsData = await testimonialsRes.json();
+  const servicesData = await servicesRes.json();
+  const profile = await profileRes.json();
+  const siteSettings = await settingsRes.json();
+  
+  return {
+    props: {
+      posts: (postsData.results || postsData).slice(0, 3),
+      testimonials: (testimonialsData.results || testimonialsData).slice(0, 2),
+      services: (servicesData.results || servicesData),
+      profile,siteSettings,
+    },
+  };
+}
+
+export default HomePage;
