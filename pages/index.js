@@ -80,7 +80,7 @@ export default function HomePage() {
         <p className="text-xl text-brand-text mt-6 max-w-2xl mx-auto">
           Te acompaño en tu proceso de autoconocimiento y bienestar emocional a través de una terapia cercana y profesional.
         </p>
-        <Link href="/contacto" className="mt-10 inline-block bg-brand-primary text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-brand-primary-dark transition-all duration-300 shadow-lg hover:shadow-xl">
+        <Link href="/contact" className="mt-10 inline-block bg-brand-primary text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-brand-primary-dark transition-all duration-300 shadow-lg hover:shadow-xl">
           Agendar una Cita
         </Link>
       </section>
