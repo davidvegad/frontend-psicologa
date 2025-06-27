@@ -1,22 +1,16 @@
 // components/WhatsAppButton.js
 import React, { useContext } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { WhatsAppContext } from '../context/WhatsAppContext';
+import { SiteContext } from '../context/SiteContext'; // <-- Usamos el nuevo SiteContext
 
 const WhatsAppButton = () => {
-  // Leemos la configuración actual del contexto
-  const { whatsAppConfig } = useContext(WhatsAppContext);
+  // Ahora obtenemos siteSettings del contexto global
+  const { siteSettings } = useContext(SiteContext);
 
-  // Si no hay configuración (ni global ni de página), no mostramos nada.
-  if (!whatsAppConfig?.default_whatsapp_number && !whatsAppConfig?.number) {
-    return null;
-  }
-  
-  // Usamos el número/mensaje específico del servicio, o el por defecto global
-  const phoneNumber = whatsAppConfig.number || whatsAppConfig.default_whatsapp_number;
-  const message = whatsAppConfig.message || whatsAppConfig.default_whatsapp_message || '';
+  const phoneNumber = siteSettings?.default_whatsapp_number;
+  const message = siteSettings?.default_whatsapp_message || '';
 
-  // Si después de todo no hay número, tampoco mostramos nada.
+  // Si no hay un número de teléfono global, no mostramos el botón
   if (!phoneNumber) {
     return null;
   }

@@ -1,25 +1,23 @@
 // components/Header.js
 import Link from 'next/link';
+import { useContext } from 'react'; // Importamos useContext
+import { SiteContext } from '../context/SiteContext'; // Importamos nuestro contexto
 
-// 1. El componente ahora recibe 'profile' como un "prop"
-export default function Header({ profile }) {
+// El componente ya no necesita recibir props
+export default function Header() {
+  // Tomamos el perfil directamente del contexto global
+  const { profile } = useContext(SiteContext);
 
-  // 2. Se crea una variable para el nombre.
-  //    Si el perfil existe, se usa el nombre completo. Si no, un texto por defecto.
-  const psychologistName = profile ? `${profile.user.first_name} ${profile.user.last_name}` : '[Nombre]';
+  const psychologistName = profile ? `${profile.user.first_name} ${profile.user.last_name}` : '';
 
   return (
     <header className="bg-white shadow-md">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        {/*
-          Pasa la clase directamente al componente Link.
-          Next.js se encargará de ponerla en la etiqueta <a> final.
-        */}
-        {/* 3. Se usa la variable para mostrar el nombre dinámicamente */}
         <Link href="/" className="text-xl font-bold text-gray-800">
           Psicóloga {psychologistName}
         </Link>
         <div className="flex space-x-4">
+          {/* ...tus enlaces... */}
           <Link href="/" className="text-gray-600 hover:text-blue-500">Inicio</Link>
           <Link href="/about" className="text-gray-600 hover:text-blue-500">Sobre Mí</Link>
           <Link href="/servicios" className="text-gray-600 hover:text-blue-500">Servicios</Link>
