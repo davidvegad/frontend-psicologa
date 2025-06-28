@@ -4,6 +4,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import HomePageSkeleton from '../components/HomePageSkeleton'; // <-- 1. Importar el Skeleton
+
 
 // La página ya no recibe props, obtendrá sus propios datos.
 export default function HomePage() {
@@ -85,6 +87,11 @@ export default function HomePage() {
         </Link>
       </section>
 
+	  {/* 2. Lógica condicional: Si está cargando, muestra el Skeleton. Si no, muestra el contenido real. */}
+      {isLoading ? (
+        <HomePageSkeleton />
+      ) : (
+        <>
       {/* Sección "Sobre Mí" (Teaser) */}
       {profile && (
         <section data-aos="fade-up" className="container mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
@@ -151,7 +158,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+	</>
+      )}
     </div>
   );
 }
