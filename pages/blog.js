@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import SkeletonCard from '../components/SkeletonCard'; // <-- 1. Importar el Skeleton
+
 
 export default function BlogPage() {
   // 1. Creamos los estados para posts, carga y errores
@@ -34,7 +36,17 @@ export default function BlogPage() {
 
   // 3. Mostramos un estado de carga mientras esperamos la respuesta de la API
   if (isLoading) {
-    return <div className="text-center py-20">Cargando artículos...</div>;
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-12 font-serif text-brand-secondary">Mi Blog</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Creamos un array de 6 elementos para mostrar 6 skeleton cards */}
+          {Array.from({ length: 6 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   // 4. Mostramos un mensaje de error si la API falla

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import SkeletonCard from '../components/SkeletonCard'; // <-- 1. Importar el Skeleton
+
 
 // El componente ya no recibe los servicios como props
 export default function ServiciosPage() {
@@ -35,7 +37,17 @@ export default function ServiciosPage() {
 
   // Mostramos un mensaje de "Cargando..." mientras se obtienen los datos
   if (isLoading) {
-    return <div className="text-center py-20">Cargando servicios...</div>;
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-12 font-serif text-brand-secondary">Mi Blog</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Creamos un array de 6 elementos para mostrar 6 skeleton cards */}
+          {Array.from({ length: 6 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   // Mostramos un mensaje de error si la API falló

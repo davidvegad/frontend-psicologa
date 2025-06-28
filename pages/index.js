@@ -87,7 +87,7 @@ export default function HomePage() {
 
       {/* Sección "Sobre Mí" (Teaser) */}
       {profile && (
-        <section className="container mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <section data-aos="fade-up" className="container mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
             <h2 className="font-serif text-4xl font-bold text-brand-secondary mb-4">Hola, soy {profile.user.first_name}</h2>
             <p className="text-brand-text text-lg mb-6">{profile.bio.substring(0, 250)}...</p>
@@ -102,7 +102,7 @@ export default function HomePage() {
       )}
 
       {/* Sección Servicios */}
-      <section className="bg-white py-20">
+      <section data-aos="fade-up" data-aos-delay="200" className="bg-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-serif text-4xl font-bold text-brand-secondary mb-12">¿Cómo Puedo Ayudarte?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -118,7 +118,7 @@ export default function HomePage() {
       </section>
 
       {/* Sección de Testimonios */}
-      <section className="py-20">
+      <section data-aos="fade-up" data-aos-delay="200" className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-brand-secondary text-center mb-12 font-serif">Lo que dicen mis pacientes</h2>
           <div className="max-w-3xl mx-auto space-y-8">
@@ -134,7 +134,7 @@ export default function HomePage() {
       </section>
 
       {/* Sección de Últimos Artículos del Blog */}
-      <section className="bg-white py-20">
+      <section data-aos="fade-up" data-aos-delay="200" className="bg-white py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-brand-secondary text-center mb-12 font-serif">Desde Mi Blog</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
