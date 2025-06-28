@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 
-export default function ContactPage({ profile }) {
+export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(''); // 'loading', 'success', 'error'
 
@@ -65,22 +65,3 @@ export default function ContactPage({ profile }) {
   );
 }
 
-
-// AÑADE ESTA FUNCIÓN AL FINAL DEL ARCHIVO
-export async function getStaticProps() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  
-  // Hacemos la petición para obtener los datos del perfil
-  const res = await fetch(`${apiUrl}/profile/1/`); // Asumimos que el perfil tiene ID=1
-  const settingsRes = await fetch(`${apiUrl}/settings/`); 
-  const profile = await res.json();
-  const siteSettings = await settingsRes.json();
-
-
-  // Pasamos el perfil como un prop a la página
-  return {
-    props: {
-      profile, siteSettings,
-    },
-  };
-}

@@ -42,7 +42,7 @@ export default function ServiciosPage() {
         <h1 className="text-4xl font-bold text-center mb-12 font-serif text-brand-secondary">Mi Blog</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Creamos un array de 6 elementos para mostrar 6 skeleton cards */}
-          {Array.from({ length: 6 }).map((_, index) => (
+          {Array.from({ length: 3 }).map((_, index) => (
             <SkeletonCard key={index} />
           ))}
         </div>
