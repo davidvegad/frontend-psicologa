@@ -1,20 +1,27 @@
 // components/WhatsAppButton.js
+
 import React, { useContext } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { SiteContext } from '../context/SiteContext'; // <-- Usamos el nuevo SiteContext
+import { SiteContext } from '../context/SiteContext';
 
 const WhatsAppButton = () => {
-  // Ahora obtenemos siteSettings del contexto global
-  const { siteSettings } = useContext(SiteContext);
+  const { pageWhatsAppConfig, siteSettings } = useContext(SiteContext);
 
-  const phoneNumber = siteSettings?.default_whatsapp_number;
-  const message = siteSettings?.default_whatsapp_message || '';
+  // Lógica de Prioridad:
+  // 1. Usa el número/mensaje de la página actual si existe.
+  // 2. Si no, usa el número/mensaje global por defecto.
+  const phoneNumber = pageWhatsAppConfig?.number || siteSettings?.default_whatsapp_number;
+  const message = pageWhatsAppConfig?.message || siteSettings?.default_whatsapp_message || '';
 
-  // Si no hay un número de teléfono global, no mostramos el botón
+  // Si después de todo no hay un número de teléfono, no mostramos el botón.
   if (!phoneNumber) {
     return null;
   }
 
+  //
+  // ¡LA CORRECCIÓN ESTÁ AQUÍ! 
+  // Asegúrate de que la línea siguiente use comillas invertidas (backticks) ` ` y no ' ' o " ".
+  //
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (

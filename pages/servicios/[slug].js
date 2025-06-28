@@ -1,34 +1,41 @@
 // pages/servicios/[slug].js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react'; // <-- Añadir useContext
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
+import { SiteContext } from '../../context/SiteContext'; // <-- Importar el contexto
 
 export default function ServiceDetailPage() {
   const router = useRouter();
-  const { slug } = router.query; // Obtenemos el slug del servicio desde la URL
+  const { slug } = router.query;
+
+  // Obtenemos la función para actualizar el contexto específico de la página
+  const { setPageWhatsAppConfig } = useContext(SiteContext);
 
   const [service, setService] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Si el slug no está disponible todavía, no hacemos nada.
-    if (!slug) {
-      return;
-    }
+    if (!slug) return;
 
     const fetchService = async () => {
       setIsLoading(true);
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        // Usamos el slug para pedir los datos del servicio específico
         const res = await fetch(`${apiUrl}/services/${slug}/`);
-        if (!res.ok) {
-          throw new Error('No se pudo encontrar el servicio.');
-        }
+        if (!res.ok) throw new Error('No se pudo encontrar el servicio.');
         const data = await res.json();
         setService(data);
+
+        // AQUÍ ESTÁ LA MAGIA: Actualizamos el contexto con los datos de este servicio
+        if (data.whatsapp_number || data.whatsapp_message) {
+          setPageWhatsAppConfig({
+            number: data.whatsapp_number,
+            message: data.whatsapp_message,
+          });
+        }
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -37,7 +44,13 @@ export default function ServiceDetailPage() {
     };
 
     fetchService();
-  }, [slug]); // El efecto se ejecuta cada vez que el slug cambia
+
+    // ¡MUY IMPORTANTE! Función de limpieza para resetear el contexto al salir de la página
+    return () => {
+      setPageWhatsAppConfig(null);
+    };
+
+  }, [slug, setPageWhatsAppConfig]); // Dependencias del efecto
 
   if (isLoading) {
     return <div className="text-center py-20">Cargando servicio...</div>;
