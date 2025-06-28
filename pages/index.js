@@ -56,10 +56,6 @@ export default function HomePage() {
     fetchAllData();
   }, []);
 
-  // 3. Mostramos un estado de carga global
-  if (isLoading) {
-    return <div className="text-center py-20">Cargando página de inicio...</div>;
-  }
 
   if (error) {
     return <div className="text-center py-20 text-red-500">Error: {error}</div>;
